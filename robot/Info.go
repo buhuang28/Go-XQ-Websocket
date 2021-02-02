@@ -35,7 +35,6 @@ type ApiData struct {
 	RawMessage string `json:"raw_message"`
 	RejectMsg string `json:"reject_msg"`
 	Approve int64 `json:"approve"`
-	Picture []string `json:"picture"`
 	//Members map[string][]Member `json:"members"`
 	GroupsID []string `json:"groups_id"`
 }

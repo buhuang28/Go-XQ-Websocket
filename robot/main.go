@@ -8,7 +8,11 @@ func onStart() {
 	go WebSocketClient2()
 	go WebStart()
 	if err := recover(); err != nil { //产生了panic异常
-		logger.Println("onStart异常:",logger)
+		if logger != nil {
+			logger.Println("onStart异常:",err)
+		}else {
+			writeFile("exc,txt","onStart异常")
+		}
 	}
 }
 

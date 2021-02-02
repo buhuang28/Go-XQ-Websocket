@@ -7,7 +7,7 @@ func processWebsocketMsg(websocketMsg []byte)  {
 	var err error
 	err = json.Unmarshal(websocketMsg, &data)
 	if err != nil {
-		logger.Println(websocketMsg,"反序列化失败")
+		logger.Println(string(websocketMsg),"反序列化失败")
 		return
 	}
 	switch data.ApiType {

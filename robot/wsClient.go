@@ -25,9 +25,9 @@ func WebSocketClient2() {
 			time.Sleep(time.Second)
 		}
 	}
+	request := make([]byte, 2048);
 	go func() {
 		for {
-			request := make([]byte, 2048);
 			if WsCon == nil {
 				continue
 			}
@@ -38,8 +38,10 @@ func WebSocketClient2() {
 				WsCon = nil
 				wsLock.Unlock()
 				go WebSocketClient2()
+				//条件变量同步通知
 				break;
 			} else {
+				//处理websocket服务端发送过来的消息
 				go processWebsocketMsg(request[:readLen])
 			}
 			if err != nil {
@@ -54,6 +56,7 @@ func WebSocketClient2() {
 	}()
 	//这里不断向服务器那边传递在线QQ信息
 	go func() {
+
 		for  {
 			if bk {
 				return
@@ -66,5 +69,11 @@ func WebSocketClient2() {
 			time.Sleep(time.Second * 3)
 		}
 	}()
+	if err := recover(); err != nil { //产生了panic异常
+		if logger != nil {
+			logger.Println("ws客户端异常:",err)
+		}else {
+			writeFile("exc.txt","wsclient异常")
+		}
+	}
 }
-

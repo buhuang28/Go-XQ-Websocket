@@ -99,6 +99,7 @@ func OnGroupMemberRequest(xe *XEvent)  {
 		return
 	}
 	if 	WsCon != nil {
+		logger.Println("发送入群信息",string(marshal))
 		_, _ = WsCon.Write(marshal)
 	}
 }

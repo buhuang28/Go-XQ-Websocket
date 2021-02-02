@@ -95,14 +95,18 @@ func KickMember(robotQQ,groupID,userID int64,kickMsg string) {
 func RecallMessage(robotQQ,groupID,msgNum,msgID int64) string {
 
 	if msgNum != 0 && groupID != 0 && msgID != 0{
-		logger.Println("使用群号撤回")
+		if logger != nil {
+			logger.Println("使用群号撤回")
+		}
 		core.WithdrawMsg(robotQQ, groupID, msgNum, msgID)
 		return ""
 	}
 
 	messageNums := msgDiyIDToNum[msgID]
 	if messageNums == nil || len( messageNums) == 0 {
-		logger.Println("没有messageNums")
+		if logger != nil {
+			logger.Println("没有messageNums")
+		}
 		return ""
 	}
 	//k是消息num，v是群号
@@ -141,11 +145,15 @@ func GetGroups(robotQQ int64) string {
 		var getGroupInfos GetGroupInfos
 		err := json.Unmarshal([]byte(groups), &getGroupInfos)
 		if err != nil {
-			logger.Println("groups反序列化失败:",groups)
+			if logger != nil {
+				logger.Println("groups反序列化失败:",groups)
+			}
 			return groups
 		}
 		if getGroupInfos.Ec != 0 || getGroupInfos.Errcode != 0 {
-			logger.Println("getGroupInfos信息有问题:",groups)
+			if logger != nil {
+				logger.Println("getGroupInfos信息有问题:",groups)
+			}
 			return groups
 		}
 		for _,v := range getGroupInfos.Manage {
@@ -160,7 +168,9 @@ func GetGroups(robotQQ int64) string {
 		if err == nil {
 			WsCon.Write(marshal)
 		}else {
-			logger.Println("获取QQ群信息反序列化失败:",groups)
+			if logger != nil {
+				logger.Println("获取QQ群信息反序列化失败:",groups)
+			}
 		}
 	}
 	return groups
@@ -239,19 +249,45 @@ func GetOnlineQQs() string {
 	var apiCallBack ApiCallBack
 	apiCallBack.Type = GET_ONLINE_TYPE
 	if list != "" {
+
 		var QQs []string
-		split := strings.Split(list, "\r\n")
-		for _,v := range split {
-			v = strings.TrimSpace(v)
-			_, err := strconv.ParseInt(v, 10, 64)
-			for err != nil {
-				runes := []rune(v)
-				v = string(runes[:len(runes) - 2])
-				_, err = strconv.ParseInt(v, 10, 64)
+		if strings.Contains(list,"\r\n") {
+			split := strings.Split(list, "\r\n")
+
+			for _,v := range split {
+				v = strings.TrimSpace(v)
+				if v == "" {
+					continue
+				}
+				_, err := strconv.ParseInt(v, 10, 64)
+				for err != nil {
+					runes := []rune(v)
+					if len(runes) < 5 {
+						return ""
+					}
+					v = string(runes[:len(runes) - 1])
+					_, err = strconv.ParseInt(v, 10, 64)
+				}
+				QQs = append(QQs,v)
 			}
-			QQs = append(QQs,v)
+		}else {
+			_, err := strconv.ParseInt(list, 10, 64)
+			for err != nil {
+				runes := []rune(list)
+				if len(runes) < 5 {
+					return ""
+				}
+				list = string(runes[:len(runes) - 1])
+				if list == "" {
+					return ""
+				}
+				_, err = strconv.ParseInt(list, 10, 64)
+			}
+			QQs = append(QQs,list)
 		}
 		apiCallBack.OnLines = QQs
+	}else {
+		return ""
 	}
 	marshal, err := json.Marshal(apiCallBack)
 	if err == nil {
@@ -259,7 +295,9 @@ func GetOnlineQQs() string {
 			WsCon.Write(marshal)
 		}
 	}else {
-		logger.Println("获取QQ列表json反序列化失败:",list)
+		if logger != nil {
+			logger.Println("获取QQ列表json反序列化失败:",list)
+		}
 	}
 	return list
 }
@@ -315,9 +353,24 @@ func GetAllGroupMembers(robotQQ int64) string {
 			logger.Println(v.Gc,"获取不到QQ成员信息")
 			continue
 		}
+		maxlent := 5
+		isOK := false
 		var data GetMemberData
 		err := json.Unmarshal([]byte(members), &data)
-		if err != nil {
+		for err != nil && maxlent > 0 {
+			runes = []rune(members)
+			tail := runes[len(runes)-1:]
+			runes = runes[:len(runes) -2]
+			runes = append(runes,tail...)
+			maxlent --
+			members = string(runes)
+			err = json.Unmarshal([]byte(members), &data)
+			if err == nil {
+				isOK = true
+				break
+			}
+		}
+		if err != nil && !isOK {
 			logger.Println(v.Gc,"的members反序列化失败:",members)
 			continue
 		}

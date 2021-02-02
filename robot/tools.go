@@ -78,3 +78,18 @@ func Contain(o string,c []string) bool{
 	}
 	return false
 }
+
+//追加
+func writeFile(fileName,content string) bool {
+	//if !checkFile(fileName) {
+	//	return false
+	//}
+	fd,_:=os.OpenFile(fileName,os.O_RDWR|os.O_CREATE|os.O_APPEND,0644)
+	buf:=[]byte(content)
+	_, err := fd.Write(buf)
+	fd.Close()
+	if err == nil {
+		return true
+	}
+	return false
+}
