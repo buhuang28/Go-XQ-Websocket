@@ -20,17 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="84e9a86b-dde8-4b57-a7be-914c23dbf18d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.go" beforeDir="false" afterPath="$PROJECT_DIR$/app.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/Info.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/Info.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/TGo.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/processApiEvents.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processApiEvents.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot/processWsMsg.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processWsMsg.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/processXQEvents.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processXQEvents.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/tools.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/tools.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot/wsClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/wsClient.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

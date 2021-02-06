@@ -25,9 +25,9 @@ func WebSocketClient2() {
 			time.Sleep(time.Second)
 		}
 	}
-	request := make([]byte, 2048);
 	go func() {
 		for {
+			request := make([]byte, 2048);
 			if WsCon == nil {
 				continue
 			}
@@ -38,7 +38,6 @@ func WebSocketClient2() {
 				WsCon = nil
 				wsLock.Unlock()
 				go WebSocketClient2()
-				//条件变量同步通知
 				break;
 			} else {
 				//处理websocket服务端发送过来的消息

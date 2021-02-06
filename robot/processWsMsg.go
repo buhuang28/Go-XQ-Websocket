@@ -9,6 +9,8 @@ func processWebsocketMsg(websocketMsg []byte)  {
 	if err != nil {
 		logger.Println(string(websocketMsg),"反序列化失败")
 		return
+	}else {
+		logger.Println(string(websocketMsg))
 	}
 	switch data.ApiType {
 	case 1:
