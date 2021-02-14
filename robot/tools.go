@@ -54,6 +54,7 @@ func createLog() {
 		f ,_= os.OpenFile(logFileAllPath,os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 	}
 	logger = log.New(f, "", log.LstdFlags)
+	logger.SetFlags(log.LstdFlags | log.Lshortfile)
 }
 
 func CheckFileIsExits(fileName string) bool {

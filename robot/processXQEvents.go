@@ -17,6 +17,12 @@ func OnGroupMessage(selfID,messageType,groupID,userID,messageNum,messageID,messa
 	//撤回消息用的-----------
 	//xe.MessageID
 	//xe.MessageNum
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			logger.Println(err)
+		}
+	}()
+
 
 	xe := XEvent{
 		SelfID:      selfID,		//接收消息的机器人QQ

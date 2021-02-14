@@ -3,6 +3,12 @@ package robot
 import "encoding/json"
 
 func processWebsocketMsg(websocketMsg []byte)  {
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			logger.Println(err)
+		}
+	}()
+
 	var data ApiData
 	var err error
 	err = json.Unmarshal(websocketMsg, &data)

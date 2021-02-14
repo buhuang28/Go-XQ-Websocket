@@ -27,10 +27,10 @@ func WebSocketClient2() {
 	}
 	go func() {
 		for {
-			request := make([]byte, 2048);
 			if WsCon == nil {
 				continue
 			}
+			request := make([]byte, 2048);
 			readLen, err := WsCon.Read(request)
 			if readLen == 0 {
 				wsLock.Lock()

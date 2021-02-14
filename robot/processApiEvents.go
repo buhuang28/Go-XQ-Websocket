@@ -30,6 +30,12 @@ func SendPrivateMessage(robotQQ,messageType,groupID,userID int64,msg string) str
 	//		msg += pic
 	//	}
 	//}
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			logger.Println(err)
+		}
+	}()
+
 	v2 := core.SendMsgEX_V2(robotQQ, messageType, groupID, userID, msg, 0, false, "")
 	return v2
 }
@@ -57,6 +63,13 @@ func SendGroupMessage(robotQQ,messageType,msgID,groupID,userID int64,msg string)
 	//		msg += pic
 	//	}
 	//}
+
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			logger.Println(err)
+		}
+	}()
+
 	mid := msgID
 	v2 := core.SendMsgEX_V2(robotQQ, messageType, groupID, userID, msg, 0, false, "")
 	var msgPack MsgPack
@@ -249,7 +262,6 @@ func GetOnlineQQs() string {
 	var apiCallBack ApiCallBack
 	apiCallBack.Type = GET_ONLINE_TYPE
 	if list != "" {
-
 		var QQs []string
 		if strings.Contains(list,"\r\n") {
 			split := strings.Split(list, "\r\n")
