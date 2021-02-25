@@ -22,8 +22,6 @@ func OnGroupMessage(selfID,messageType,groupID,userID,messageNum,messageID,messa
 			logger.Println(err)
 		}
 	}()
-
-
 	xe := XEvent{
 		SelfID:      selfID,		//接收消息的机器人QQ
 		MessageType: messageType,
@@ -32,7 +30,6 @@ func OnGroupMessage(selfID,messageType,groupID,userID,messageNum,messageID,messa
 		Message:     message,		//消息内容
 		MessageNum:  messageNum,	//用于消息撤回
 		MessageID:   messageID,		//用于消息撤回
-		//RawMessage:  rawMessage,	//原始信息
 		Time:        messageTime,			//接收到消息的时间戳
 	}
 	marshal, _ := json.Marshal(xe)
@@ -79,7 +76,7 @@ func OnEchoMessage(msg string,messageID,messageNum int64)  {
 	if messageID != -1 && messageNum != -1 && messageID != 0 && messageNum != 0 {
 		msgNumToID[messageNum] = messageID
 	}
-	logger.Println(msg,"\r\n的序号为:",messageNum,",消息ID为",messageID)
+	//logger.Println(msg,"\r\n的序号为:",messageNum,",消息ID为",messageID)
 	msgLock.Unlock()
 }
 
@@ -105,7 +102,6 @@ func OnGroupMemberRequest(xe *XEvent)  {
 		return
 	}
 	if 	WsCon != nil {
-		logger.Println("发送入群信息",string(marshal))
 		_, _ = WsCon.Write(marshal)
 	}
 }

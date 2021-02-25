@@ -17,7 +17,7 @@ type AppInfo struct {
 func newAppInfo() *AppInfo {
 	return &AppInfo {
 		Name:   "Websocket-Client",
-		Pver:   "1.2.9",
+		Pver:   "1.3.15",
 		Sver:   3,
 		Author: "不慌",
 		Desc:   "websocket-Client",

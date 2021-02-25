@@ -1,6 +1,7 @@
 package robot
 
 import (
+	"strconv"
 	"xq-go-sdk/core"
 )
 
@@ -16,6 +17,10 @@ func init() {
 func XQCreate(version string) string {
 	return AppInfoJson
 }
+
+var (
+	msgMap = make(map[string]int64)
+)
 
 type XEvent struct {
 	SelfID      int64 `json:"self_id"`
@@ -35,29 +40,6 @@ type XEvent struct {
 }
 
 func XQEvent(selfID int64, messageType int64, subType int64, groupID int64, userID int64, noticID int64, message string, messageNum int64, messageID int64, rawMessage string, time int64, ret int64) int64 {
-	//xe2 := XEvent{
-	//	SelfID:      selfID,		//接收消息的机器人QQ
-	//	MessageType: messageType,	//消息类型
-	//	SubType:     subType,		//分辨撤回事件是群撤回还是好友撤回 和入群成员等信息
-	//	GroupID:     groupID,		//消息来源ID 可能需要和下面的配合
-	//	UserID:      userID,		//消息来源ID
-	//	NoticID:     noticID,		//触发对象、被动
-	//	Message:     message,		//消息内容
-	//	MessageNum:  messageNum,	//用于消息撤回
-	//	MessageID:   messageID,		//用于消息撤回
-	//	RawMessage:  rawMessage,	//原始信息
-	//	Time:        time,			//接收到消息的时间戳
-	//	Ret:         ret,
-	//	CqID:        0,
-	//}
-	//go func() {
-	//	if messageType != 12001 && messageType != 12002 {
-	//		if WsCon != nil {
-	//			marshal, _ := json.Marshal(xe2)
-	//			WsCon.Write(marshal)
-	//		}
-	//	}
-	//}()
 	switch messageType {
 	//插件启动事件
 	case 12001:
@@ -67,10 +49,35 @@ func XQEvent(selfID int64, messageType int64, subType int64, groupID int64, user
 	// 消息事件下
 	// 0：临时会话 1：好友会话 4：群临时会话 7：好友验证会话
 	case 0, 1, 4, 5, 7:
-		go OnPrivateMessage(selfID,messageType,groupID,userID,message)
+		go func() {
+			OnPrivateMessage(selfID,messageType,groupID,userID,message)
+		}()
 	// 2：群聊信息
 	case 2, 3:
-		go OnGroupMessage(selfID,messageType,groupID,userID,messageNum,messageID,time,message)
+		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					logger.Println(err)
+				}
+			}()
+			mesSid := strconv.FormatInt(messageID,10)+ strconv.FormatInt(selfID,10)
+			msgLock.Lock()
+			num,ok := msgMap[mesSid]
+			msgLock.Unlock()
+			if ok && num == messageNum {
+				return
+			}else {
+				msgLock.Lock()
+				msgMap[mesSid] = messageNum
+				msgLock.Unlock()
+				OnGroupMessage(selfID,messageType,groupID,userID,messageNum,messageID,time,message)
+				if len(msgMap) > 10500 {
+					msgLock.Lock()
+					msgMap = make(map[string]int64)
+					msgLock.Unlock()
+				}
+			}
+		}()
 	// 10：回音信息---发送消息后的回音
 	case 10:
 		go OnEchoMessage(message,messageID,messageNum)

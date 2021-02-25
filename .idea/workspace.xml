@@ -22,11 +22,14 @@
     <list default="true" id="84e9a86b-dde8-4b57-a7be-914c23dbf18d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.go" beforeDir="false" afterPath="$PROJECT_DIR$/app.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.bat" beforeDir="false" afterPath="$PROJECT_DIR$/build.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot/processApiEvents.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processApiEvents.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot/processWsMsg.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processWsMsg.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot/processXQEvents.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processXQEvents.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/tools.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/tools.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot/wsClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/wsClient.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot/xqEvent.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/xqEvent.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +43,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="C:\Go" />
+  <component name="GOROOT" path="C:/Program Files/Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -55,9 +58,10 @@
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Go-Mirai-Client" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="go.vgo" />
   </component>
   <component name="RecentsManager">
@@ -79,13 +83,21 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Go Build.go build xq-go-sdk" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="84e9a86b-dde8-4b57-a7be-914c23dbf18d" name="Default Changelist" comment="" />
+      <created>1613809356116</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1613809356116</updated>
+      <workItem from="1613809359157" duration="6000" />
+      <workItem from="1613892692038" duration="8000" />
+      <workItem from="1614061248473" duration="460000" />
+    </task>
+    <servers />
+  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
@@ -110,45 +122,29 @@
     </environment>
   </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1612607335255">
+    <state width="1493" height="209" key="GridCell.Tab.0.bottom" timestamp="1613811127201">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1612607335255" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1612618455082">
+    <state width="1493" height="209" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1613811127201" />
+    <state width="1493" height="209" key="GridCell.Tab.0.center" timestamp="1613811127201">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1612618455082" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1612618455082">
+    <state width="1493" height="209" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1613811127201" />
+    <state width="1493" height="209" key="GridCell.Tab.0.left" timestamp="1613811127201">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1612618455082" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1612618455082">
+    <state width="1493" height="209" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1613811127201" />
+    <state width="1493" height="209" key="GridCell.Tab.0.right" timestamp="1613811127201">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1612618455082" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1612618455082">
+    <state width="1493" height="209" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1613811127201" />
+    <state x="467" y="144" width="602" height="536" key="find.popup" timestamp="1614154393523">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1612618455082" />
-    <state x="0" y="113" key="SettingsEditor" timestamp="1611583672140">
+    <state x="467" y="144" width="602" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1614154393523" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1613883624755">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="113" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1611583672140" />
-    <state x="543" y="172" key="com.goide.refactor.move.GoMoveDeclarationDialog" timestamp="1611306363553">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="543" y="172" key="com.goide.refactor.move.GoMoveDeclarationDialog/0.0.1536.824@0.0.1536.824" timestamp="1611306363553" />
-    <state x="768" y="0" width="774" height="830" key="dock-window-1" timestamp="1611244792921">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="768" y="0" width="774" height="830" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1611244792921" />
-    <state x="480" y="151" width="602" height="536" key="find.popup" timestamp="1612866704622">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="480" y="151" width="602" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1612866704622" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1611759532263">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1611759532263" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1613883624755" />
   </component>
 </project>

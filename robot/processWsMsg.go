@@ -8,29 +8,74 @@ func processWebsocketMsg(websocketMsg []byte)  {
 			logger.Println(err)
 		}
 	}()
-
 	var data ApiData
 	var err error
 	err = json.Unmarshal(websocketMsg, &data)
 	if err != nil {
-		logger.Println(string(websocketMsg),"反序列化失败")
+		if logger != nil {
+			logger.Println("反序列化失败",string(websocketMsg))
+		}
 		return
 	}else {
-		logger.Println(string(websocketMsg))
+		//if logger != nil {
+		//	logger.Println(string(websocketMsg))
+		//}
 	}
 	switch data.ApiType {
 	case 1:
-		SendPrivateMessage(data.RobotQQ, data.MessageType,data.GroupID, data.UserID, data.Message)
+		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					logger.Println(err)
+				}
+			}()
+			SendPrivateMessage(data.RobotQQ, data.MessageType,data.GroupID, data.UserID, data.Message)
+		}()
 	case 2:
-		SendGroupMessage(data.RobotQQ, data.MessageType,data.MsgID, data.GroupID,data.UserID, data.Message)
+		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					logger.Println(err)
+				}
+			}()
+			SendGroupMessage(data.RobotQQ, data.MessageType,data.MsgID, data.GroupID,data.UserID, data.Message)
+		}()
 	case 3:
-		KickMember(data.RobotQQ,data.GroupID,data.UserID,data.RejectMsg)
+		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					logger.Println(err)
+				}
+			}()
+			KickMember(data.RobotQQ,data.GroupID,data.UserID,data.RejectMsg)
+		}()
 	case 4:
-		RecallMessage(data.RobotQQ, data.GroupID,data.MessageNum, data.MsgID)
+		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					logger.Println(err)
+				}
+			}()
+			RecallMessage(data.RobotQQ, data.GroupID,data.MessageNum, data.MsgID)
+		}()
 	case 5:
-		BanMember(data.RobotQQ,data.GroupID,data.UserID,data.Time)
+		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					logger.Println(err)
+				}
+			}()
+			BanMember(data.RobotQQ,data.GroupID,data.UserID,data.Time)
+		}()
 	case 6:
-		RejectMember(data.RobotQQ,data.SubType,data.UserID,data.GroupID,data.Approve,data.RawMessage,data.RejectMsg)
+		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					logger.Println(err)
+				}
+			}()
+			RejectMember(data.RobotQQ,data.SubType,data.UserID,data.GroupID,data.Approve,data.RawMessage,data.RejectMsg)
+		}()
 	case 7:
 		GetGroups(data.RobotQQ)
 	case 8:
@@ -46,6 +91,4 @@ func processWebsocketMsg(websocketMsg []byte)  {
 	case 13:
 		GetPointGroupMembers_2(data.RobotQQ, data.GroupsID)
 	}
-
-
 }

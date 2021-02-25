@@ -15,6 +15,11 @@ func WebSocketClient2() {
 	var err error
 	bk := false
 	for {
+		defer func() {
+			if err := recover(); err != nil { //产生了panic异常
+				logger.Println(err)
+			}
+		}()
 		WsCon,err = websocket.Dial(url, "", origin);
 		if err == nil {
 			break
@@ -27,10 +32,15 @@ func WebSocketClient2() {
 	}
 	go func() {
 		for {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					logger.Println(err)
+				}
+			}()
 			if WsCon == nil {
 				continue
 			}
-			request := make([]byte, 2048);
+			request := make([]byte, 2048)
 			readLen, err := WsCon.Read(request)
 			if readLen == 0 {
 				wsLock.Lock()
@@ -41,7 +51,9 @@ func WebSocketClient2() {
 				break;
 			} else {
 				//处理websocket服务端发送过来的消息
-				go processWebsocketMsg(request[:readLen])
+				var req []byte
+				req = request[:readLen]
+				processWebsocketMsg(req)
 			}
 			if err != nil {
 				wsLock.Lock()
@@ -55,7 +67,6 @@ func WebSocketClient2() {
 	}()
 	//这里不断向服务器那边传递在线QQ信息
 	go func() {
-
 		for  {
 			if bk {
 				return
