@@ -21,15 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="84e9a86b-dde8-4b57-a7be-914c23dbf18d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.go" beforeDir="false" afterPath="$PROJECT_DIR$/app.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.bat" beforeDir="false" afterPath="$PROJECT_DIR$/build.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/processApiEvents.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processApiEvents.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/processWsMsg.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processWsMsg.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/processXQEvents.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processXQEvents.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/wsClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/wsClient.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/xqEvent.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/xqEvent.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +74,11 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build xq-go-sdk" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -95,6 +91,7 @@
       <workItem from="1613809359157" duration="6000" />
       <workItem from="1613892692038" duration="8000" />
       <workItem from="1614061248473" duration="460000" />
+      <workItem from="1614566657522" duration="112000" />
     </task>
     <servers />
   </component>
@@ -122,26 +119,26 @@
     </environment>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1493" height="209" key="GridCell.Tab.0.bottom" timestamp="1613811127201">
+    <state width="1493" height="208" key="GridCell.Tab.0.bottom" timestamp="1614690154937">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="209" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1613811127201" />
-    <state width="1493" height="209" key="GridCell.Tab.0.center" timestamp="1613811127201">
+    <state width="1493" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614690154937" />
+    <state width="1493" height="208" key="GridCell.Tab.0.center" timestamp="1614690154937">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="209" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1613811127201" />
-    <state width="1493" height="209" key="GridCell.Tab.0.left" timestamp="1613811127201">
+    <state width="1493" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1614690154937" />
+    <state width="1493" height="208" key="GridCell.Tab.0.left" timestamp="1614690154937">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="209" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1613811127201" />
-    <state width="1493" height="209" key="GridCell.Tab.0.right" timestamp="1613811127201">
+    <state width="1493" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1614690154937" />
+    <state width="1493" height="208" key="GridCell.Tab.0.right" timestamp="1614690154937">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="209" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1613811127201" />
-    <state x="467" y="144" width="602" height="536" key="find.popup" timestamp="1614154393523">
+    <state width="1493" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1614690154937" />
+    <state x="467" y="144" width="602" height="596" key="find.popup" timestamp="1614682226074">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="467" y="144" width="602" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1614154393523" />
+    <state x="467" y="144" width="602" height="596" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1614682226074" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1613883624755">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
