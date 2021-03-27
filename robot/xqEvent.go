@@ -1,6 +1,7 @@
 package robot
 
 import (
+	"encoding/json"
 	"strconv"
 	"xq-go-sdk/core"
 )
@@ -40,24 +41,60 @@ type XEvent struct {
 }
 
 func XQEvent(selfID int64, messageType int64, subType int64, groupID int64, userID int64, noticID int64, message string, messageNum int64, messageID int64, rawMessage string, time int64, ret int64) int64 {
+
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println("GetOnlineQQs异常:",err)
+			}else {
+				writeFile("exc.txt","onStart异常")
+			}
+		}
+	}()
+
 	switch messageType {
 	//插件启动事件
 	case 12001:
-		go onStart()
+		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常")
+					}
+				}
+			}()
+			onStart()
+		}()
 	//插件关闭事件
 	case 12002:
 	// 消息事件下
 	// 0：临时会话 1：好友会话 4：群临时会话 7：好友验证会话
 	case 0, 1, 4, 5, 7:
 		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常")
+					}
+				}
+			}()
 			OnPrivateMessage(selfID,messageType,groupID,userID,message)
 		}()
+		logger.Println(selfID,messageType,subType,groupID,userID,noticID,message,messageID,rawMessage,time,ret)
 	// 2：群聊信息
 	case 2, 3:
 		go func() {
 			defer func() {
 				if err := recover(); err != nil { //产生了panic异常
-					logger.Println(err)
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常")
+					}
 				}
 			}()
 			mesSid := strconv.FormatInt(messageID,10)+ strconv.FormatInt(selfID,10)
@@ -80,7 +117,18 @@ func XQEvent(selfID int64, messageType int64, subType int64, groupID int64, user
 		}()
 	// 10：回音信息---发送消息后的回音
 	case 10:
-		go OnEchoMessage(message,messageID,messageNum)
+		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常20")
+					}
+				}
+			}()
+			OnEchoMessage(message,messageID,messageNum)
+		}()
 	// 通知事件
 	// 群文件接收
 	case 218:
@@ -92,7 +140,18 @@ func XQEvent(selfID int64, messageType int64, subType int64, groupID int64, user
 	case 202:
 	// 群成员增加
 	case 212:
-		go OnGroupMemberIncrease(selfID,messageType,groupID,noticID)
+		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常19")
+					}
+				}
+			}()
+			OnGroupMemberIncrease(selfID,messageType,groupID,noticID)
+		}()
 	// 群禁言 203为禁言 204为解禁
 	case 203:
 	case 204:
@@ -116,6 +175,16 @@ func XQEvent(selfID int64, messageType int64, subType int64, groupID int64, user
 	// 加群请求／邀请 213请求入群  214我被邀请加入某群  215某人被邀请加入群
 	case 213:
 		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常18")
+					}
+				}
+			}()
+
 			nick := core.GetNick(selfID,userID)
 			xe := XEvent {
 				SelfID:      selfID,		//接收消息的机器人QQ
@@ -131,6 +200,15 @@ func XQEvent(selfID int64, messageType int64, subType int64, groupID int64, user
 		}()
 	case 214:
 		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常17")
+					}
+				}
+			}()
 			nick := core.GetNick(selfID,noticID)
 			xe := XEvent {
 				SelfID:      selfID,		//接收消息的机器人QQ
@@ -148,6 +226,15 @@ func XQEvent(selfID int64, messageType int64, subType int64, groupID int64, user
 		//user_id邀请人
 		//notic_id被邀请人
 		go func() {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常16")
+					}
+				}
+			}()
 			nick := core.GetNick(selfID,noticID)
 			xe := XEvent {
 				SelfID:      selfID,		//接收消息的机器人QQ
@@ -165,7 +252,50 @@ func XQEvent(selfID int64, messageType int64, subType int64, groupID int64, user
 		//这个是邀请人进群后直接进群的好像
 		//notic_id是被邀请人的QQ
 		//user_id是邀请人的QQ
+	case 1101:
+		//机器人上线
+		xe := XEvent {
+			SelfID:      selfID,		//接收消息的机器人QQ
+			MessageType: messageType,	//消息类型
+			GroupID:     groupID,		//消息来源ID 可能需要和下面的配合
+			UserID:      userID,		//消息来源ID
+			NoticID:     noticID,		//触发对象、被动
+			Message:     message,		//消息内容
+			RawMessage:  rawMessage,	//原始信息
+		}
+		marshal, err := json.Marshal(xe)
+		if err == nil && WsCon != nil {
+			WsCon.Write(marshal)
+		}
+	case 1102,1103,1104:
+		//机器人掉线、下线、封号
+		xe := XEvent {
+			SelfID:      selfID,		//接收消息的机器人QQ
+			MessageType: messageType,	//消息类型
+			GroupID:     groupID,		//消息来源ID 可能需要和下面的配合
+			UserID:      userID,		//消息来源ID
+			NoticID:     noticID,		//触发对象、被动
+			Message:     message,		//消息内容
+			RawMessage:  rawMessage,	//原始信息
+		}
+		marshal, err := json.Marshal(xe)
+		if err == nil && WsCon != nil {
+			WsCon.Write(marshal)
+		}
 	default:
+		xe := XEvent {
+			SelfID:      selfID,		//接收消息的机器人QQ
+			MessageType: messageType,	//消息类型
+			GroupID:     groupID,		//消息来源ID 可能需要和下面的配合
+			UserID:      userID,		//消息来源ID
+			NoticID:     noticID,		//触发对象、被动
+			Message:     message,		//消息内容
+			RawMessage:  rawMessage,	//原始信息
+		}
+		marshal, err := json.Marshal(xe)
+		if err != nil && WsCon != nil {
+			WsCon.Write(marshal)
+		}
 		//
 	}
 	return 0

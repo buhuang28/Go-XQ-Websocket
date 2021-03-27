@@ -206,8 +206,23 @@ extern void __stdcall XQ_AuthId(int ID, int IMAddr){
     LoadAPI(S3_Api_GetPluginList);
     LoadAPI(S3_Api_GetWpa);
     LoadAPI(S3_Api_Uninstall);
-
     return;
+}
+
+char *str_same(char *a, char* b) {
+    if (!a || !b) return NULL;
+	int len = strlen(a);
+    int i = 0;
+    for (; i < len; ++i) if ((*(a+i) - *(b+i))) break;
+	char *c = (char*)malloc(sizeof(char)*i);
+	memcpy(c, a, i);
+    c[i]='\0';
+    return c;
+}
+
+char *fix_str(char *string) {
+    if (!string) return NULL;
+    return string+4;
 }
 
 // 在使用本类方法前必须调用本函数(返回框架版本号)
@@ -233,7 +248,9 @@ char * S3_Api_GetFriendList(char * selfID){
 
 // 取机器人在线账号列表
 char * S3_Api_GetOnLineList(){
-    char * ret = S3_Api_GetOnLineList_Ptr(authid);
+    char *a = S3_Api_GetOnLineList_Ptr(authid);
+    char *b = S3_Api_GetOnLineList_Ptr(authid);
+    char *ret = str_same(fix_str(a), fix_str(b));
     return ret;
 }
 
@@ -588,8 +605,10 @@ int S3_Api_DelFriend(char * selfID, char * userID){
 // 取QQ昵称
 // selfID  响应QQ  文本型  机器人QQ
 // userID  对象QQ  文本型  欲取得的QQ的号码
-char * S3_Api_GetNick(char * selfID, char * userID){
-    char * ret = S3_Api_GetNick_Ptr(authid, selfID, userID);
+char *S3_Api_GetNick(char *selfID, char *userID){
+    char *a = S3_Api_GetNick_Ptr(authid, selfID, userID);
+    char *b = S3_Api_GetNick_Ptr(authid, selfID, userID);
+    char *ret = str_same(fix_str(a), fix_str(b));
     free(selfID);
     free(userID);
     return ret;
@@ -1159,3 +1178,5 @@ int S3_Api_Uninstall(){
     int ret = S3_Api_Uninstall_Ptr(authid);
     return ret;
 }
+
+

@@ -5,7 +5,11 @@ import "encoding/json"
 func processWebsocketMsg(websocketMsg []byte)  {
 	defer func() {
 		if err := recover(); err != nil { //产生了panic异常
-			logger.Println(err)
+			if logger != nil {
+				logger.Println("GetOnlineQQs异常:",err)
+			}else {
+				writeFile("exc.txt","onStart异常")
+			}
 		}
 	}()
 	var data ApiData
@@ -26,7 +30,11 @@ func processWebsocketMsg(websocketMsg []byte)  {
 		go func() {
 			defer func() {
 				if err := recover(); err != nil { //产生了panic异常
-					logger.Println(err)
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常")
+					}
 				}
 			}()
 			SendPrivateMessage(data.RobotQQ, data.MessageType,data.GroupID, data.UserID, data.Message)
@@ -35,7 +43,11 @@ func processWebsocketMsg(websocketMsg []byte)  {
 		go func() {
 			defer func() {
 				if err := recover(); err != nil { //产生了panic异常
-					logger.Println(err)
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常")
+					}
 				}
 			}()
 			SendGroupMessage(data.RobotQQ, data.MessageType,data.MsgID, data.GroupID,data.UserID, data.Message)
@@ -44,7 +56,11 @@ func processWebsocketMsg(websocketMsg []byte)  {
 		go func() {
 			defer func() {
 				if err := recover(); err != nil { //产生了panic异常
-					logger.Println(err)
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常")
+					}
 				}
 			}()
 			KickMember(data.RobotQQ,data.GroupID,data.UserID,data.RejectMsg)
@@ -53,7 +69,11 @@ func processWebsocketMsg(websocketMsg []byte)  {
 		go func() {
 			defer func() {
 				if err := recover(); err != nil { //产生了panic异常
-					logger.Println(err)
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常")
+					}
 				}
 			}()
 			RecallMessage(data.RobotQQ, data.GroupID,data.MessageNum, data.MsgID)
@@ -62,7 +82,11 @@ func processWebsocketMsg(websocketMsg []byte)  {
 		go func() {
 			defer func() {
 				if err := recover(); err != nil { //产生了panic异常
-					logger.Println(err)
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常")
+					}
 				}
 			}()
 			BanMember(data.RobotQQ,data.GroupID,data.UserID,data.Time)
@@ -71,7 +95,11 @@ func processWebsocketMsg(websocketMsg []byte)  {
 		go func() {
 			defer func() {
 				if err := recover(); err != nil { //产生了panic异常
-					logger.Println(err)
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常")
+					}
 				}
 			}()
 			RejectMember(data.RobotQQ,data.SubType,data.UserID,data.GroupID,data.Approve,data.RawMessage,data.RejectMsg)

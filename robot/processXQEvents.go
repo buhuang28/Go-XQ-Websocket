@@ -19,7 +19,9 @@ func OnGroupMessage(selfID,messageType,groupID,userID,messageNum,messageID,messa
 	//xe.MessageNum
 	defer func() {
 		if err := recover(); err != nil { //产生了panic异常
-			logger.Println(err)
+			if logger != nil {
+				logger.Println(err)
+			}
 		}
 	}()
 	xe := XEvent{
@@ -40,6 +42,14 @@ func OnGroupMessage(selfID,messageType,groupID,userID,messageNum,messageID,messa
 
 //私聊
 func OnPrivateMessage(selfID,messageType,groupID,userID int64,message string)  {
+
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println(err)
+			}
+		}
+	}()
 	xe := XEvent{
 		SelfID:      selfID,		//接收消息的机器人QQ
 		MessageType: messageType,	//消息类型
@@ -55,6 +65,13 @@ func OnPrivateMessage(selfID,messageType,groupID,userID int64,message string)  {
 
 //群成员++
 func OnGroupMemberIncrease(selfID,messageType,groupID,noticID int64)  {
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println(err)
+			}
+		}
+	}()
 	//NoticID //新增群员ID
 	xe := XEvent{
 		SelfID:      selfID,		//接收消息的机器人QQ
@@ -72,28 +89,56 @@ func OnGroupMemberIncrease(selfID,messageType,groupID,noticID int64)  {
 
 //回音信息处理---给儿子找爸爸
 func OnEchoMessage(msg string,messageID,messageNum int64)  {
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println(err)
+			}
+		}
+		msgLock.Unlock()
+	}()
 	msgLock.Lock()
 	if messageID != -1 && messageNum != -1 && messageID != 0 && messageNum != 0 {
 		msgNumToID[messageNum] = messageID
 	}
-	//logger.Println(msg,"\r\n的序号为:",messageNum,",消息ID为",messageID)
-	msgLock.Unlock()
+	logger.Println(msg,"\r\n的序号为:",messageNum,",消息ID为",messageID)
 }
 
 //成员被踢
 func OnGroupMemberBeKick(xe *XEvent) {
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println(err)
+			}
+		}
+	}()
 	//xe.SelfID
 
 }
 
 //成员主动退群
 func OnGroupMemberReduce(xe *XEvent)  {
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println(err)
+			}
+		}
+	}()
 	//xe.SelfID
 
 }
 
 //有人申请进群
 func OnGroupMemberRequest(xe *XEvent)  {
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println(err)
+			}
+		}
+	}()
 	//xe.SelfID
 	marshal, err := json.Marshal(xe)
 	logger.Println("入群信息",string(marshal))
@@ -108,6 +153,13 @@ func OnGroupMemberRequest(xe *XEvent)  {
 
 //有人被邀请进群
 func OnGroupMemberIntive(xe *XEvent) {
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println(err)
+			}
+		}
+	}()
 	marshal, err := json.Marshal(xe)
 	logger.Println("被邀请入群信息",string(marshal))
 	if err != nil {
@@ -121,6 +173,13 @@ func OnGroupMemberIntive(xe *XEvent) {
 
 //有人邀请机器人进群
 func OnIviteRobotToGroup(xe *XEvent){
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println(err)
+			}
+		}
+	}()
 	marshal, err := json.Marshal(xe)
 	logger.Println("有人邀请机器人进群信息",string(marshal))
 	if err != nil {

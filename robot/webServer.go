@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
+	"xq-go-sdk/core"
 )
 
 func WebStart()  {
@@ -14,6 +15,15 @@ func WebStart()  {
 
 //HttpApi接口
 func apiTest(context *gin.Context)  {
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println("GetOnlineQQs异常:",err)
+			}else {
+				writeFile("exc.txt","onStart3异常")
+			}
+		}
+	}()
 	body, err := ioutil.ReadAll(context.Request.Body)
 	if body == nil || err != nil {
 		context.JSON(200, gin.H{
@@ -69,6 +79,9 @@ func apiTest(context *gin.Context)  {
 	case 13:
 		members_2 := GetPointGroupMembers_2(data.RobotQQ, data.GroupsID)
 		context.JSON(200, Result{Code : -1,Message: "sucess",Data: members_2})
+	case 14:
+		link := core.GetPicLink(data.RobotQQ, 1, 0, data.Message)
+		context.JSON(200,Result{0,link,"sucess"})
 	}
 }
 

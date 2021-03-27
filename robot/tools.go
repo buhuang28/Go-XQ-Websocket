@@ -58,6 +58,15 @@ func createLog() {
 }
 
 func CheckFileIsExits(fileName string) bool {
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println("GetOnlineQQs异常:",err)
+			}else {
+				writeFile("exc.txt","onStart异常")
+			}
+		}
+	}()
 	_, err := os.Stat(fileName)
 	if err != nil {
 		if os.IsExist(err) {
@@ -69,10 +78,19 @@ func CheckFileIsExits(fileName string) bool {
 }
 
 func Contain(o string,c []string) bool{
-	if c == nil || len(c) == 0{
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println("GetOnlineQQs异常:",err)
+			}else {
+				writeFile("exc.txt","onStart异常")
+			}
+		}
+	}()
+	if c == nil || len(c) == 0 {
 		return false
 	}
-	for _,v := range c{
+	for _,v := range c {
 		if o == v {
 			return true
 		}
@@ -85,6 +103,15 @@ func writeFile(fileName,content string) bool {
 	//if !checkFile(fileName) {
 	//	return false
 	//}
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println("GetOnlineQQs异常:",err)
+			}else {
+				writeFile("exc.txt","onStart异常")
+			}
+		}
+	}()
 	fd,_:=os.OpenFile(fileName,os.O_RDWR|os.O_CREATE|os.O_APPEND,0644)
 	buf:=[]byte(content)
 	_, err := fd.Write(buf)

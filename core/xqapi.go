@@ -2,6 +2,7 @@ package core
 
 //#include <xqapi.h>
 import "C"
+import sc "golang.org/x/text/encoding/simplifiedchinese"
 
 // 在使用本类方法前必须调用本函数(返回框架版本号)
 func ApiInit() bool {
@@ -25,10 +26,22 @@ func GetFriendList(selfID int64) string {
 	))
 }
 
+
+func CPtr2GoStr_2(str *C.char) string {
+	//ptr := C.eStrPtr2CStrPtr(str)
+	if str != nil {
+		utf8str, _ := sc.GB18030.NewDecoder().String(C.GoString(str))
+		return utf8str
+	}
+	return ""
+}
+
 // 取机器人在线账号列表
 func GetOnLineList() string {
-	return CPtr2GoStr(C.S3_Api_GetOnLineList())
+	return CPtr2GoStr_2(C.S3_Api_GetOnLineList())
 }
+
+
 
 // 取机器人账号是否在线
 // selfID  响应QQ  文本型  机器人QQ
@@ -343,7 +356,7 @@ func DelFriend(selfID int64, userID int64) bool {
 // selfID  响应QQ  文本型  机器人QQ
 // userID  对象QQ  文本型  欲取得的QQ的号码
 func GetNick(selfID int64, userID int64) string {
-	return CPtr2GoStr(C.S3_Api_GetNick(
+	return CPtr2GoStr_2(C.S3_Api_GetNick(
 		GoInt2CStr(selfID), GoInt2CStr(userID),
 	))
 }
