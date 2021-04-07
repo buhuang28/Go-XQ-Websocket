@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -120,4 +121,32 @@ func writeFile(fileName,content string) bool {
 		return true
 	}
 	return false
+}
+
+var (
+	imgReg = regexp.MustCompile(`\[Pic=(C.*?)\]`)
+)
+
+func CheckMsgImage(msg string) string {
+	allString := imgReg.FindAllStringSubmatch(msg, -1)
+	for _,v := range allString {
+		if len(v) < 2 {
+			logger.Println("检测到外星人的信息:",msg)
+			continue
+		}
+		exits := CheckFileIsExits(v[1])
+		if !exits {
+			msg = strings.ReplaceAll(msg,v[1],"")
+		}
+	}
+	return msg
+}
+
+func GetPwd() string {
+	getwd, err := os.Getwd()
+	logger.Println(getwd)
+	if err != nil {
+		logger.Println(err)
+	}
+	return getwd
 }

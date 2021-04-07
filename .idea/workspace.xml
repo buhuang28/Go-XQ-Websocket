@@ -25,14 +25,9 @@
       <change beforePath="$PROJECT_DIR$/core/xqapi.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/xqapi.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/xqapi.h" beforeDir="false" afterPath="$PROJECT_DIR$/core/xqapi.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot/Info.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/Info.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot/processApiEvents.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processApiEvents.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/processWsMsg.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processWsMsg.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/processXQEvents.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/processXQEvents.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot/tools.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/tools.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/webServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/webServer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot/wsClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/wsClient.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot/xqEvent.go" beforeDir="false" afterPath="$PROJECT_DIR$/robot/xqEvent.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,22 +128,22 @@
     </environment>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1493" height="208" key="GridCell.Tab.0.bottom" timestamp="1616426181022">
+    <state width="1493" height="261" key="GridCell.Tab.0.bottom" timestamp="1617735691275">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1616426181022" />
-    <state width="1493" height="208" key="GridCell.Tab.0.center" timestamp="1616426181022">
+    <state width="1493" height="261" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1617735691275" />
+    <state width="1493" height="261" key="GridCell.Tab.0.center" timestamp="1617735691275">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1616426181022" />
-    <state width="1493" height="208" key="GridCell.Tab.0.left" timestamp="1616426181021">
+    <state width="1493" height="261" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1617735691275" />
+    <state width="1493" height="261" key="GridCell.Tab.0.left" timestamp="1617735691275">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1616426181021" />
-    <state width="1493" height="208" key="GridCell.Tab.0.right" timestamp="1616426181022">
+    <state width="1493" height="261" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1617735691275" />
+    <state width="1493" height="261" key="GridCell.Tab.0.right" timestamp="1617735691275">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1616426181022" />
+    <state width="1493" height="261" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1617735691275" />
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1615382078431">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -157,13 +152,24 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="581" y="84" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.824@0.0.1536.824" timestamp="1615478688555" />
-    <state x="522" y="131" width="602" height="616" key="find.popup" timestamp="1616775005853">
+    <state x="522" y="131" width="602" height="616" key="find.popup" timestamp="1617784241151">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="522" y="131" width="602" height="616" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1616775005853" />
+    <state x="522" y="131" width="602" height="616" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1617784241151" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1616406871289">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1616406871289" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/robot/processApiEvents.go</url>
+          <line>573</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -41,8 +41,6 @@ func GetOnLineList() string {
 	return CPtr2GoStr_2(C.S3_Api_GetOnLineList())
 }
 
-
-
 // 取机器人账号是否在线
 // selfID  响应QQ  文本型  机器人QQ
 func Getbotisonline(selfID int64) bool {
@@ -866,4 +864,8 @@ func GetWpa(userID int64) int64 {
 // 主动卸载插件自身
 func Uninstall() bool {
 	return GoBool(C.S3_Api_Uninstall())
+}
+
+func FuckXQ() {
+	C.fuck_xq_error()
 }

@@ -394,7 +394,7 @@ int S3_Api_IfFriend(char * selfID, char * userID){
 
 // 修改QQ在线状态
 // selfID  响应QQ  文本型  无
-// type  类型  整数型  1、我在线上 2、Q我吧 3、离开 4、忙碌 5、请勿打扰 6、隐身 7、修改昵称 8、修改个性签名 9、修改性别 
+// type  类型  整数型  1、我在线上 2、Q我吧 3、离开 4、忙碌 5、请勿打扰 6、隐身 7、修改昵称 8、修改个性签名 9、修改性别
 // text  修改内容  文本型  类型为7和8时填写修改内容  类型9时“1”为男 “2”为女      其他填“”
 void S3_Api_SetRInf(char * selfID, int type, char * text){
     S3_Api_SetRInf_Ptr(authid, selfID, type, text);
@@ -1179,4 +1179,41 @@ int S3_Api_Uninstall(){
     return ret;
 }
 
+//日先驱Error
+int cmp(char *a,char *b)
+{
+    int i=0;
+    while(a[i]!='\0')
+    {
+        if(a[i] != b[i])
+            return 0;
+        i++;
+    }
+    return 1;
+}
 
+char xq_error_windows_name[] = {"先驱框架运行时出现异常!"};
+
+void fuck_xq_error() {
+    HWND hd=GetDesktopWindow();     //得到桌面窗口
+    hd=GetWindow(hd,GW_CHILD);        //得到屏幕上第一个子窗口
+    char s[200]={0};
+    while(hd!=NULL)                    //循环得到所有的子窗口
+    {
+//        FindWindowEx(hd, "", "", "按钮的标题");
+        memset(s,0,200);
+        GetWindowText(hd,s,200);
+        if (strlen(s) == 0){
+            hd=GetNextWindow(hd,GW_HWNDNEXT);
+            continue;
+        }
+        printf("%s\n");
+        if (cmp(s,xq_error_windows_name) != 0) {
+//            CloseWindow(hd);
+            SendMessageA(hd,WM_CLOSE,0,0);
+        }
+        hd=GetNextWindow(hd,GW_HWNDNEXT);
+    }
+//    free(s);
+//    free(hd);
+}

@@ -58,6 +58,7 @@ type ApiCallBack struct {
 	Members map[string][]Member `json:"members"`
 	Members2 map[string]map[string]Nick `json:"members_2"`
 	ManagerGroup []int64 `json:"manager_group"`
+	Path string `json:"path"`
 }
 
 type GetMemberData struct {

@@ -5,12 +5,14 @@ import (
 	"golang.org/x/net/websocket"
 	"sync"
 	"time"
+	"xq-go-sdk/core"
 )
 
 var origin = "http://127.0.0.1:9989/"
 var url = "ws://127.0.0.1:9989/event"
-var WsCon *websocket.Conn
+var WsCon *websocket.Conn = nil
 var wsLock sync.Mutex
+
 
 func WebSocketClient2() {
 	defer func() {
@@ -21,91 +23,46 @@ func WebSocketClient2() {
 		}
 	}()
 
-	var err error
-	bk := false
-	for {
-		defer func() {
-			if err := recover(); err != nil { //产生了panic异常
-				if logger != nil {
-					logger.Println("GetOnlineQQs异常:",err)
-				}else {
-					writeFile("exc.txt","onStart异常21\n")
-				}
-			}
-		}()
-		WsCon,err = websocket.Dial(url, "", origin);
-		if err == nil {
-			if logger != nil {
-				logger.Println("ws链接成功")
-			}
-			go func() {
-				err := recover()
-				if err != nil {
-					if logger != nil {
-						logger.Println("GetOnlineQQs异常:",err)
-					}else {
-						writeFile("exc.txt","onStart异常21\n")
-					}
-				}
-				GetOnlineQQs()
-			}()
-			break
-		}else {
-			wsLock.Lock()
-			WsCon = nil
-			wsLock.Unlock()
-			time.Sleep(time.Second)
-		}
-	}
 	go func() {
 		defer func() {
 			if err := recover(); err != nil { //产生了panic异常
 				if logger != nil {
 					logger.Println("GetOnlineQQs异常:",err)
 				}else {
-					writeFile("exc.txt","onStart异常22\r\n")
+					writeFile("exc.txt","onStart异常99\n")
 				}
+				go WebSocketClient2()
 			}
 		}()
 		for {
+			defer func() {
+				if err := recover(); err != nil { //产生了panic异常
+					if logger != nil {
+						logger.Println("GetOnlineQQs异常:",err)
+					}else {
+						writeFile("exc.txt","onStart异常99\n")
+					}
+					//WsCon = nil
+				}
+			}()
 			if WsCon == nil {
 				go func() {
-					defer func() {
-						if err := recover(); err != nil { //产生了panic异常
-							if logger != nil {
-								logger.Println("GetOnlineQQs异常:",err)
-							}else {
-								writeFile("exc.txt","onStart异常99\n")
-							}
-							//WsCon = nil
-						}
-					}()
-					WebSocketClient2()
+					Websocket_Client_Dail()
 				}()
-				//continue
-				return
+				time.Sleep(time.Second*3)
+				continue
 			}
 			request := make([]byte, 2048)
 			readLen, err := WsCon.Read(request)
-			if readLen == 0 {
+			if readLen == 0 ||err != nil {
 				wsLock.Lock()
-				bk = true
 				WsCon = nil
 				wsLock.Unlock()
 				go func() {
-					defer func() {
-						if err := recover(); err != nil { //产生了panic异常
-							if logger != nil {
-								logger.Println("GetOnlineQQs异常:",err)
-							}else {
-								writeFile("exc.txt","onStart异常98")
-							}
-							//WsCon = nil
-						}
-					}()
-					WebSocketClient2()
+					Websocket_Client_Dail()
 				}()
-				break;
+				time.Sleep(time.Second*3)
+				continue;
 			} else {
 				//处理websocket服务端发送过来的消息
 				var req []byte
@@ -123,25 +80,25 @@ func WebSocketClient2() {
 					processWebsocketMsg(req)
 				}()
 			}
-			if err != nil {
-				go func() {
-					defer func() {
-						if err := recover(); err != nil { //产生了panic异常
-							if logger != nil {
-								logger.Println("GetOnlineQQs异常:",err)
-							}else {
-								writeFile("exc.txt","onStart异常")
-							}
-						}
-					}()
-				}()
-				wsLock.Lock()
-				bk = true
-				WsCon = nil
-				wsLock.Unlock()
-				WebSocketClient2()
-				break
-			}
+			//if err != nil {
+			//	defer func() {
+			//		if err := recover(); err != nil { //产生了panic异常
+			//			if logger != nil {
+			//				logger.Println("GetOnlineQQs异常:",err)
+			//			}else {
+			//				writeFile("exc.txt","onStart异常")
+			//			}
+			//		}
+			//	}()
+			//	wsLock.Lock()
+			//	WsCon = nil
+			//	wsLock.Unlock()
+			//	time.Sleep(time.Second*3)
+			//	go func() {
+			//		Websocket_Client_Dail()
+			//	}()
+			//	continue
+			//}
 		}
 	}()
 	//这里不断向服务器那边传递在线QQ信息   -----废弃，改为websocket心跳包
@@ -156,7 +113,20 @@ func WebSocketClient2() {
 				}
 			}
 			WsCon = nil
+			go Websocket_Client_Dail()
 		}()
+
+		go func() {
+			for {
+				err := recover()
+				if err != nil {
+					logger.Println(err)
+				}
+				core.FuckXQ()
+				time.Sleep(time.Second * 5)
+			}
+		}()
+
 		for  {
 			if WsCon != nil {
 				//GetOnlineQQs()
@@ -167,8 +137,41 @@ func WebSocketClient2() {
 				if err2 == nil && WsCon != nil {
 					WsCon.Write(marshal)
 				}
+			}else {
+				go Websocket_Client_Dail()
 			}
-			time.Sleep(time.Second * 30)
+			time.Sleep(time.Second * 20)
 		}
 	}()
+}
+
+func Websocket_Client_Dail() {
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println("GetOnlineQQs异常:",err)
+			}else {
+				writeFile("exc.txt","onStart异常21\n")
+			}
+		}
+	}()
+	var err error
+	wsLock.Lock()
+	WsCon,err = websocket.Dial(url, "", origin);
+	logger.Println("Dail错误",err)
+	wsLock.Unlock()
+	if WsCon != nil && err == nil {
+		time.Sleep(time.Second * 3)
+		GetOnlineQQs()
+		if logger != nil {
+			logger.Println("ws链接成功")
+		}
+		return
+	}else {
+		wsLock.Lock()
+		WsCon = nil
+		wsLock.Unlock()
+		//time.Sleep(time.Second)
+		//go Websocket_Client_Dail()
+	}
 }

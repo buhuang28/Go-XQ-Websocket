@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 	"xq-go-sdk/core"
 )
@@ -42,6 +43,11 @@ func SendPrivateMessage(robotQQ,messageType,groupID,userID int64,msg string) str
 			}
 		}
 	}()
+
+	if strings.Contains(msg,`[Pic=C`) {
+		msg = CheckMsgImage(msg)
+	}
+
 	v2 := core.SendMsgEX_V2(robotQQ, messageType, groupID, userID, msg, 0, false, "")
 	return v2
 }
@@ -77,7 +83,12 @@ func SendGroupMessage(robotQQ,messageType,msgID,groupID,userID int64,msg string)
 				writeFile("exc.txt","onStart异常6")
 			}
 		}
+		msgLock.Unlock()
 	}()
+
+	if strings.Contains(msg,`[Pic=C`) {
+		msg = CheckMsgImage(msg)
+	}
 
 	mid := msgID
 	v2 := core.SendMsgEX_V2(robotQQ, messageType, groupID, userID, msg, 0, false, "")
@@ -91,7 +102,6 @@ func SendGroupMessage(robotQQ,messageType,msgID,groupID,userID int64,msg string)
 		}
 		msgNumToGroup[msgPack.Msgno] = groupID
 		msgDiyIDToNum[mid] = msgNumToGroup
-		msgLock.Unlock()
 	}
 	return v2
 }
@@ -598,6 +608,8 @@ func GetOnlineQQs() string {
 
 	if qqList == "" || qqList2 == "" {
 		if logger != nil {
+			logger.Println("ql:",qqList)
+			logger.Println("ql2:",qqList2)
 			logger.Println("获取到空QQ在线列表")
 		}else {
 			writeFile("exc.txt","获取到空QQ在线列表  "+strconv.FormatInt(time.Now().Unix(),10))
@@ -785,6 +797,7 @@ func GetOnlineQQs() string {
 	var apiCallBack ApiCallBack
 	apiCallBack.Type = GET_ONLINE_TYPE
 	apiCallBack.OnLines = getQQList
+	apiCallBack.Path = GetPwd()
 	marshal, err := json.Marshal(apiCallBack)
 	if err == nil {
 		if WsCon != nil {
@@ -811,6 +824,7 @@ func GetOnlineQQs() string {
 		writeFile("exc.txt",logContent+"  "+strconv.FormatInt(time.Now().Unix(),10))
 	}
 	q := core.GetOnLineList()
+
 
 	return q
 }
@@ -925,23 +939,30 @@ func GetOnlineQQs_2() string {
 	return qqList
 }
 
+var (
+	GetGroupLock sync.Mutex
+)
+
 //获取全部群和成员
 func GetAllGroupMembers(robotQQ int64) string {
+	GetGroupLock.Lock()
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println("GetAllGroupMembers异常:",err)
+			}else {
+				writeFile("exc.txt","GetAllGroupMembers异常")
+			}
+		}
+		GetGroupLock.Unlock()
+	}()
 	logContent := "开始调用GetAllGroupMembers"
 	if logger != nil {
 		logger.Println(logContent)
 	}else {
 		writeFile("exc.txt",logContent+"  "+strconv.FormatInt(time.Now().Unix(),10))
 	}
-	defer func() {
-		if err := recover(); err != nil { //产生了panic异常
-			if logger != nil {
-				logger.Println("GetAllGroupMembers异常:",err)
-			}else {
-				writeFile("exc.txt","onStart异常")
-			}
-		}
-	}()
+
 	var data ApiCallBack
 
 	GroupMemberMap := make(map[string][]Member)
@@ -963,7 +984,6 @@ func GetAllGroupMembers(robotQQ int64) string {
 
 	joinArray := parse.Get("join").Array()
 	manageArray := parse.Get("manage").Array()
-
 
 	var managerGroup []int64
 	for _,v := range manageArray {
@@ -1017,19 +1037,23 @@ func GetAllGroupMembers(robotQQ int64) string {
 
 //获取全部群和成员2
 func GetAllGroupMembers_2(robotQQ int64) string {
+	GetGroupLock.Lock()
+	defer func() {
+		if err := recover(); err != nil { //产生了panic异常
+			if logger != nil {
+				logger.Println("GetAllGroupMembers_2异常:",err)
+			}else {
+				writeFile("exc.txt","GetAllGroupMembers_2异常")
+			}
+		}
+		GetGroupLock.Unlock()
+	}()
 	logContent := "开始调用GetAllGroupMembers_2"
 	if logger != nil {
 		logger.Println(logContent)
 	}else {
 		writeFile("exc.txt",logContent+"  "+strconv.FormatInt(time.Now().Unix(),10))
 	}
-	defer func() {
-		if err := recover(); err != nil { //产生了panic异常
-			if logger != nil {
-				logger.Println(err)
-			}
-		}
-	}()
 	var data ApiCallBack
 
 	GroupMemberMap := make(map[string]map[string]Nick)
